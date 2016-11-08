@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Анализатор текста</title>
+  
+    <link rel="stylesheet" type="text/css" media="all" href="assets/reset.css" /><!--резет стили-->
+    <link rel="stylesheet" type="text/css" media="all" href="assets/style.css" /><!--общие стили-->
+    <link rel="stylesheet" type="text/css" href="assets/tablecss.css"><!--стили для таблицы-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/script.js"></script><!--освновной скрипт для анализа текста-->
+    <script type="text/javascript" src="assets/stopwords.js"></script><!--скрипт для стоп-слов-->
+</head>
+<body>
+  <div class="loader"><!--предзагрузка страницы-->
+  <div class="loader_inner"></div>
+  </div>
+
+<section class="wrapper">
+<section class="content">
+<ul>
+<li>         
+<div class="container">
+  <form> 
+    <h1>Анализатор текста</h1>
+<div class="form-group"><!-- форма для ввода текста -->
+    <textarea required="required"  id="text" tabindex="1" onclick="this.select()" onfocus="this.select()"></textarea>
+    <label for="textarea" class="control-label">Введите свой текст в представленное ниже поле и нажмите кнопку "Анализировать".</label><i class="bar"></i>
+</div>
+    
+<li class="butspan">
+<span><input type="button" value="Анализировать!" name="analyze" id="analyze" tabindex="2" /></span>
+</li>
+  </form><!-- форма для ввода текста -->
+</div>
+</li>
+</ul>
+ <article id="results"><!-- таблица с результатами анализа -->
+            <br>
+<div class="table-responsive-vertical shadow-z-1">
+
+<table id="table" class="table table-hover table-mc-light-blue">
+ <thead>
+<tr><th>Символы</th><td>&nbsp;</td></tr>
+</thead>
+<tbody>
+<tr><th>Общее количество:&nbsp;</th><td><span id="length">0</span></td></tr>
+<tr><th>Без пробелов:</th><td><span id="length_clear">0</span></td></tr>
+</tbody>
+</table>
+<div class="table-responsive-vertical shadow-z-1">
+<table id="table" class="table table-hover table-mc-light-blue">
+<thead>
+<tr><th>Слова</th><td>&nbsp;</td></tr>
+</thead>
+<tbody>
+<tr><th>Общее количество:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><td><span id="words">0</span></td></tr>
+<tr><th>Уникальных слов:</th><td><span id="words_uniq">0</span></td></tr>
+<tr><th>Средняя длина слова:</th><td><span id="word_len">0</span> <em>симв.</em></td></tr>
+<tr><th>Кол-во стоп-слов:</th><td><span id="words_stopwords">0</span></td></tr>
+<tr><th>Водность текста:&nbsp;</th><td><span id="words_water">0</span><em>%</em></td></tr>
+</tbody>
+</table>
+</div>
+</td><td>
+<div class="table-responsive-vertical shadow-z-1">
+<table id="table" class="table table-hover table-mc-light-blue">
+<thead>
+<tr><th>Предложения</th><td>&nbsp;</td></tr>
+</thead>
+<tbody>
+<tr><th>Общее количество:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><td><span id="sentences">0</span></td></tr>
+<tr><th>Минимальная длина:</th><td><span id="sentence_min">0</span> <em>слов</em></td></tr>
+<tr><th>Максимальная длина:</th><td><span id="sentence_max">0</span> <em>слов</em></td></tr>
+<tr><th>Средняя длина:</th><td><span id="sentence_avg">0</span> <em>слов</em></td></tr>
+</tbody>
+</table>
+</div>
+<div class="table-responsive-vertical shadow-z-1">
+<table id="table" class="table table-hover table-mc-light-blue">
+<thead>
+<tr><th>Запятые</th><td>&nbsp;</td></tr>
+</thead>
+<tbody>
+<tr><th>Общее количество:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><td><span id="commas">0</span></td></tr>
+<tr><th>Среднее число:</th><td><span id="commas_avg">0</span> <em>на предл.</em></td></tr>
+</tbody>
+</table>
+</div>
+</td>
+</div>
+</article>
+</section>
+</section>
+<script>
+  $(".loader_inner").delay(1500).fadeOut();
+  $(".loader").delay(1500).fadeOut("slow");
+</script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+</body>
+</html>
