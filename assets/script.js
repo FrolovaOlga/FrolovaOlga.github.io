@@ -60,7 +60,7 @@ var numwords = function(text) {
     return cleartext(text).split(' ').length;
 };
 
-//
+// sort the uniques array in descending order by frequency
 function compareFrequency(a, b) {
     return b[1] - a[1];
 }
@@ -69,7 +69,7 @@ var freqwords = function(words, minfreq, onlyval) {
     var frequency = {}, value;
     if (!minfreq) minfreq = 1;
 
-    // 
+    // compute frequencies of each value
     for(var i = 0; i < words.length; i++) {
         value = words[i];
         if(value in frequency) {
@@ -87,13 +87,13 @@ var freqwords = function(words, minfreq, onlyval) {
                 uniques.push(value);
         }
 
-        // 
+        // sort the uniques array in descending order by frequency
         function compareFrequency(a, b) {
             return frequency[b] - frequency[a];
         }
     } else {
 
-        // 
+        // make array from the frequency object to de-duplicate
         var uniques = [];
         for(value in frequency) {
             if (frequency[value] >= minfreq)
@@ -194,7 +194,17 @@ $(document).ready(function() {
         stat.commas = inline.length - inline.replace(/,/g, '').length;
         stat.commas_avg = stat.sentences ? Math.round(10*stat.commas/stat.sentences)/10 : 0;
         
+        // вычисление последовательностей
+        /*
+        var two_words = [], three_words = [];
         
+        for (i = 0; i < words.length-1; i++) {
+            two_words[i] = [words[i], words[i+1]].join(' ');
+            
+            if (i < words.length-2)
+                three_words[i] = [words[i], words[i+1], words[i+2]].join(' ');
+        }
+        */
        var multi_words_matrix = [], multi_words, multi_words_dic = [];
        
        var mx_max = 6;
@@ -202,7 +212,7 @@ $(document).ready(function() {
             multi_words = fill_multi_matrix(words, n_mx);
             
             var freq = freqwords(multi_words, 2);
-
+//            console.log(freq); exit;
             
             if (n_mx !== mx_max) {
                 freq = $.grep(freq, function(el, ind){
@@ -222,7 +232,10 @@ $(document).ready(function() {
    
        multi_words_dic = multi_words_dic.sort(compareFrequency);
        
-
+//    two_words = ['после того', 'создание сайтов', 'того как', 'того как', 'после того'];
+//    three_words = ['после того как', 'после того как'];
+//    
+    
                 
         // заполнение частотного словаря
         var freq = freqwords(words_clear, 2),
@@ -235,7 +248,36 @@ $(document).ready(function() {
     
         $('table#wordfreq tbody').html(cont);
 
-   
+        /*
+        var freq_two_words = freqwords(two_words, 2);
+        var freq_three_words = freqwords(three_words, 2);
+        
+        // удаление двойных последовательностей, которые есть в тройных
+        freq_two_words = $.grep(freq_two_words, function(el, ind){
+            
+            if (el[0].split(' ').diff(stopwords).length === 0)
+                return false;
+            
+            for(var i = 0; i < freq_three_words.length; i++) {
+                if (freq_three_words[i][0].indexOf(el[0]) !== -1)
+                    return false;
+            }
+        
+            return true;
+        });
+    
+        freq_three_words = $.grep(freq_three_words, function(el, ind){
+            if (el[0].split(' ').diff(stopwords).length === 0)
+                return false;
+            
+            return true;
+        });
+
+
+        // заполнение таблицы частых связок
+        var freq = freq_two_words.concat(freq_three_words),
+            cont = '';
+        */
 
         var freq = multi_words_dic;
             cont = '';
@@ -254,7 +296,7 @@ $(document).ready(function() {
             scrollTop: $("#results").offset().top
         }, 500);
     
-       
+        ga('send', 'event', 'button', 'click', 'analyze', stat.words);
     });
 
 
@@ -262,4 +304,11 @@ $(document).ready(function() {
 
 });
 
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-2158779-19', 'textanalyzer.ru');
+ga('send', 'pageview');
 
