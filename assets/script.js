@@ -33,7 +33,7 @@ if (!('indexOf' in Array.prototype)) {
         return -1;
     };
 }
-
+// add array
 if (!Array.prototype.unique){
     Array.prototype.unique=function(a) {
         return this.filter(function(itm,i,a) {
